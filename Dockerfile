@@ -7,7 +7,7 @@ bash \
 nano \
 curl \
 wget \
-inputls-ping \
+iputls-ping \
 procps \
 net-tools
 
