@@ -1,15 +1,15 @@
 #menggunakan base image ubuntu
-From ubuntu 22.04
+from ubuntu: 22.04
 
-#update dan install paket dasar
-Run apt-get update && apt-get install -y \
+#update dan install paket dasar 
+run apt-get update && apt-get install
 bash \
 nano \
 curl \
 wget \
-iputls-ping \
-procps \
+iputlish \
+procsp \
 net-tools
 
-#set Default Shell
-CMD ["/bin/bash"]
+#user default shell
+cmd ["/bin/bash"]
