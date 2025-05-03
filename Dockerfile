@@ -8,4 +8,4 @@ RUN apt-get update && apt-get install -y \
     iputils-ping \
     procps \
     net-tools
-cmd ["/bin/bash"]
+CMD ["/bin/bash"]
