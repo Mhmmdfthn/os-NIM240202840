@@ -1,38 +1,23 @@
-struct file {
-  enum { FD_NONE, FD_PIPE, FD_INODE } type;
-  int ref; // reference count
-  char readable;
-  char writable;
-  struct pipe *pipe;
-  struct inode *ip;
-  uint off;
-};
-
-
-// in-memory copy of an inode
-struct inode {
-  uint dev;           // Device number
-  uint inum;          // Inode number
-  int ref;            // Reference count
-  struct sleeplock lock; // protects everything below here
-  int valid;          // inode has been read from disk?
-
-  short type;         // copy of disk inode
-  short major;
-  short minor;
-  short nlink;
-  uint size;
-  uint addrs[NDIRECT+1];
-  short mode;
-};
-
-// table mapping major device number to
-// device functions
-struct devsw {
-  int (*read)(struct inode*, char*, int);
-  int (*write)(struct inode*, char*, int);
-};
-
-extern struct devsw devsw[];
-
-#define CONSOLE 1
+// System call numbers
+#define SYS_fork    1
+#define SYS_exit    2
+#define SYS_wait    3
+#define SYS_pipe    4
+#define SYS_read    5
+#define SYS_kill    6
+#define SYS_exec    7
+#define SYS_fstat   8
+#define SYS_chdir   9
+#define SYS_dup    10
+#define SYS_getpid 11
+#define SYS_sbrk   12
+#define SYS_sleep  13
+#define SYS_uptime 14
+#define SYS_open   15
+#define SYS_write  16
+#define SYS_mknod  17
+#define SYS_unlink 18
+#define SYS_link   19
+#define SYS_mkdir  20
+#define SYS_close  21
+#define SYS_chmod  27
