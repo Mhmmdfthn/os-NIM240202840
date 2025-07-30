@@ -24,6 +24,7 @@ fetchint(uint addr, int *ip)
   *ip = *(int*)(addr);
   return 0;
 }
+
 // Fetch the nul-terminated string at addr from the current process.
 // Doesn't actually copy the string - just sets *pp to point at it.
 // Returns length of string, not including nul.
@@ -59,7 +60,7 @@ argptr(int n, char **pp, int size)
 {
   int i;
   struct proc *curproc = myproc();
-
+ 
   if(argint(n, &i) < 0)
     return -1;
   if(size < 0 || (uint)i >= curproc->sz || (uint)i+size > curproc->sz)
@@ -67,7 +68,6 @@ argptr(int n, char **pp, int size)
   *pp = (char*)i;
   return 0;
 }
-
 
 // Fetch the nth word-sized system call argument as a string pointer.
 // Check that the pointer is valid and the string is nul-terminated.
@@ -81,7 +81,8 @@ argstr(int n, char **pp)
     return -1;
   return fetchstr(addr, pp);
 }
-
+extern int sys_getpinfo(void); //vi
+extern int sys_getreadcount(void); //gi
 extern int sys_chdir(void);
 extern int sys_close(void);
 extern int sys_dup(void);
@@ -103,10 +104,10 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
-extern int sys_getpinfo(void);
-extern int sys_getreadcount(void);
 
 static int (*syscalls[])(void) = {
+[SYS_getpinfo]     sys_getpinfo,//vi
+[SYS_getreadcount] sys_getreadcount,//gi
 [SYS_fork]    sys_fork,
 [SYS_exit]    sys_exit,
 [SYS_wait]    sys_wait,
@@ -128,8 +129,6 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_getpinfo]     sys_getpinfo,
-[SYS_getreadcount] sys_getreadcount,
 };
 
 void
