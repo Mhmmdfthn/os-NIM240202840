@@ -42,7 +42,7 @@ sys_getpid(void)
 {
   return myproc()->pid;
 }
-nt
+int
 sys_sbrk(void)
 {
   int addr;
@@ -100,7 +100,7 @@ extern struct {
   struct proc proc[NPROC];
 } ptable;
 
-nt
+int
 sys_getpinfo(void)
 {
   struct pinfo *dest;
